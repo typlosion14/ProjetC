@@ -30,7 +30,11 @@ int main() {
         printf("7. R%cparer la suspension.\n", 130);
         printf("8. Recharger la batterie.\n");
         printf("9. Repartir.\n");
-        cin >> r;
+        if (!(cin >> r)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            r = 0;
+        }
         switch (r) {
         case 1:;
             break;
