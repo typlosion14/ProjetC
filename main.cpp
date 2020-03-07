@@ -21,7 +21,7 @@ class Moteur
        void Refill(){
            huile = 100;
        };
-        int Gettime(){
+       int Gettime(){
             return time;
 		};
     private:
@@ -43,7 +43,7 @@ class Reservoir
         void Refill(){
             essence = 100;
         };
-         int Gettime(){
+        int Gettime(){
             return time;
 		};
     private:
@@ -71,7 +71,7 @@ class Pneu
             pression = 100;
             usure = 100;
         };
-         int Gettime(){
+        int Gettime(){
             return time;
 		};
     private:
@@ -93,7 +93,7 @@ class BoiteDeVitesse
         void Change(){
             usure = 100;
         };
-         int Gettime(){
+        int Gettime(){
             return time;
 		};
     private:
@@ -114,7 +114,7 @@ class Batterrie
         void Change(){
             charge = 100;
         };
-         int Gettime(){
+        int Gettime(){
             return time;
 		};
     private:
@@ -135,7 +135,7 @@ class Suspension
         void Change(){
             usure = 100;
         };
-         int Gettime(){
+        int Gettime(){
             return time;
 		};
     private:
@@ -156,7 +156,7 @@ class Aileron
          void Change(){
             usure = 100;
         };
-         int Gettime(){
+        int Gettime(){
             return time;
 		};
     private:
