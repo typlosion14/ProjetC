@@ -5,64 +5,81 @@
 
 class Moteur
 {
-        
-    public:  
+    public:
        int Gettemperature(){
            return temperature;
-       }
+       };
        void Settemperature(int a){
            temperature = a;
-       }
-       int Getniveau_huile(){
-           return niveau_huile;
-       }
-       void Setniveau_huile(int a){
-           niveau_huile = a;
-       }
+       };
+       int Gethuile(){
+           return huile;
+       };
+       void Sethuile(int a){
+           huile = a;
+       };
+       void Refill(){
+           huile = 100;
+       };
+        int Gettime(){
+            return time;
+		};
     private:
-        int temperature = 100;
-        int niveau_huile = 60;
-
+        int temperature = 70;
+        int huile = 60;
+        int time = 10;
 };
+
 
 class Reservoir
 {
     public:
-        int Getniveau_essence(){
-            return niveau_essence;
+        int Getessence(){
+            return essence;
         };
-        void Setniveau_essence(int a){
-            niveau_essence = a;
+        void Setessence(int a){
+            essence = a;
         };
+        void Refill(){
+            essence = 100;
+        };
+         int Gettime(){
+            return time;
+		};
     private:
-        int niveau_essence = 80;
+        int essence = 80;
+        int time = 10;
 };
- 
+
 
 class Pneu
 {
     public:
         int Getpression(){
            return pression;
-        }
-
+        };
         void Setpression(int a){
            pression = a;
-        }
-
+        };
         int Getusure(){
             return usure;
-        }
-
+        };
         void Setusure(int a){
         usure = a;
-        }
+        };
+        void Change(){
+            pression = 100;
+            usure = 100;
+        };
+         int Gettime(){
+            return time;
+		};
     private:
          int pression = 80;
          int usure = 0;
-         
-        
+         int time = 10;
 };
+
 
 class BoiteDeVitesse
 {
@@ -72,38 +89,61 @@ class BoiteDeVitesse
         };
         int Getusure(){
             return usure;
-        }
+        };
+        void Change(){
+            usure = 100;
+        };
+         int Gettime(){
+            return time;
+		};
     private:
         int usure = 0;
+        int time = 10;
 };
 
 
-class Baterie
+class Batterrie
 {
     public:
         int Getcharge(){
             return charge;
-        }
+        };
         void Setcharge(int a){
             charge = a;
-        }
+        };
+        void Change(){
+            charge = 100;
+        };
+         int Gettime(){
+            return time;
+		};
     private:
-        int charge = 0;
+        int charge = 100;
+        int time = 10;
 };
+
 
 class Suspension
 {
     public:
         int Getusure(){
             return usure;
-        }
+        };
         void Setusure(int a){
             usure = a;
-        }
+        };
+        void Change(){
+            usure = 100;
+        };
+         int Gettime(){
+            return time;
+		};
     private:
          int usure = 0;
-
+         int time = 10;
 };
+
+
 class Aileron
 {
     public:
@@ -113,21 +153,36 @@ class Aileron
         void Setusure(int a){
             usure = a;
         };
+         void Change(){
+            usure = 100;
+        };
+         int Gettime(){
+            return time;
+		};
     private:
         int usure = 0;
+        int time = 10;
 };
+
 
 class Turbo
 {
     public:
         int Getusure(){
             return usure;
-        }
+        };
         void Setusure(int a){
             usure = a;
-        }
+        };
+         void Change(){
+            usure = 100;
+        };
+        int Gettime(){
+            return time;
+		};
     private:
          int usure = 0;
+         int time = 10;
 };
 
 
@@ -140,20 +195,25 @@ class Car
         Pneu pneu_avant_droit;
         Pneu pneu_arriere_droit;
         Reservoir reservoir;
-    
+		BoiteDeVitesse boitedevitesse;
+		Batterrie batterrie;
+		Suspension suspension;
+		Aileron aileron;
+		Turbo turbo;
+
+		void Change_pneu(){
+		    pneu_avant_gauche.Change();
+		    pneu_avant_droit.Change();
+		    pneu_arriere_gauche.Change();
+		    pneu_arriere_droit.Change();
+		};
+
+		int Gettime_pneu(){
+		    return time_pneu;
+		};
+
+    private:
+        int time_pneu = 5;
 
 };
 
-
-int main() {
-    
-    Car car;
-    Car car2;
-
-    std::cout << car.pneu_arriere_droit.Getusure() << std::endl;
-    car.pneu_arriere_droit.Setusure(20);
-    std::cout << car.pneu_arriere_droit.Getusure() << std::endl;
-
-
-    return 0;
-}
