@@ -204,9 +204,55 @@ private:
 };
 
 
+class Circuit
+{
+    public:
+        int Getsize() {
+            return size;
+        };
+        void SetTurn(int a) {
+            turn = a;
+        };
+        int GetTurn() {
+            return turn;
+        };
+        void SetVirageG(int a) {
+            virageG = a;
+
+        };
+        int GetVirageG() {
+            return virageG;
+        };
+        void SetVirageD(int a) {
+            virageD = a;
+        };
+        int GetVirageD() {
+            return virageD;
+        };
+        void Setdistance(int a) {
+            distance_parcourue = a;
+        };
+
+        int Getdistance () {
+            return distance_parcourue;
+        };
+
+        private:
+        int virageG = 5;
+        int virageD = 4;
+        int size = 5371;
+        int turn = 00;
+        int distance_parcourue = 0;
+        bool start = false;
+
+        
+};
+
+
 class Car
 {
 public:
+    Circuit circuit;
     Moteur moteur;
     Pneu pneu_avant_gauche;
     Pneu pneu_arriere_gauche;
@@ -225,5 +271,6 @@ public:
         pneu_arriere_gauche.Change();
         pneu_arriere_droit.Change();
     };
-};
 
+    
+};
