@@ -1,7 +1,8 @@
-#include <stdio.h>
 #include <iostream>
-#include <string>
+#include <cstdlib>
+#include <stdio.h>
 using namespace std;
+
 class Time {
 public:
     void Updatetime(int a = 0) {
@@ -42,6 +43,9 @@ public:
     int Gettime() {
         return time;
     };
+    void repair() {
+        temperature -= 30;
+    };
 private:
     int temperature = 70;
     int huile = 60;
@@ -73,16 +77,16 @@ private:
 class Pneu
 {
 public:
-    int Getpression() {
+    float Getpression() {
         return pression;
     };
-    void Setpression(int a) {
+    void Setpression(float a) {
         pression = a;
     };
-    int Getusure() {
+    float Getusure() {
         return usure;
     };
-    void Setusure(int a) {
+    void Setusure(float a) {
         usure = a;
     };
     void Change() {
@@ -93,8 +97,8 @@ public:
         return time;
     };
 private:
-    int pression = 80;
-    int usure = 0;
+    float pression = 80;
+    float usure = 0;
     int time = 10;
 };
 
@@ -144,16 +148,16 @@ private:
 class Suspension
 {
 public:
-    int Getusure() {
+    float Getusure() {
         return usure;
     };
-    void Setusure(int a) {
+    void Setusure(float a) {
         usure = a;
     };
     void Change() {
         usure = 0;
     };
-    int Gettime() {
+    float Gettime() {
         return time;
     };
 private:
@@ -165,10 +169,10 @@ private:
 class Aileron
 {
 public:
-    int Getusure() {
+    float Getusure() {
         return usure;
     };
-    void Setusure(int a) {
+    void Setusure(float a) {
         usure = a;
     };
     void Change() {
@@ -178,7 +182,7 @@ public:
         return time;
     };
 private:
-    int usure = 0;
+    float usure = 0;
     int time = 10;
 };
 
@@ -186,10 +190,10 @@ private:
 class Turbo
 {
 public:
-    int Getusure() {
+    float Getusure() {
         return usure;
     };
-    void Setusure(int a) {
+    void Setusure(float a) {
         usure = a;
     };
     void Change() {
@@ -199,7 +203,7 @@ public:
         return time;
     };
 private:
-    int usure = 0;
+    float usure = 0;
     int time = 10;
 };
 
@@ -238,12 +242,12 @@ class Circuit
         };
 
         private:
-        int virageG = 5;
-        int virageD = 4;
+        int virageG = 0;
+        int virageD = 0;
         int size = 5371;
-        int turn = 00;
+        int turn = 0;
         int distance_parcourue = 0;
-        bool start = false;
+        
 
         
 };
@@ -252,7 +256,6 @@ class Circuit
 class Car
 {
 public:
-    Circuit circuit;
     Moteur moteur;
     Pneu pneu_avant_gauche;
     Pneu pneu_arriere_gauche;
@@ -271,6 +274,13 @@ public:
         pneu_arriere_gauche.Change();
         pneu_arriere_droit.Change();
     };
-
+    inline bool Setrepair(bool comme_neuve) {
+        comme_neuve =true;
+        return comme_neuve;
+    }
     
+    private:
+
+    bool comme_neuve = false;
 };
+
