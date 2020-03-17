@@ -4,7 +4,7 @@
 using namespace std;
 
 
-int random(int start, int end) {
+float random(int start, int end) {
     srand(time(NULL));
     int number = rand() % end + start;
     float decimal = (rand() % 100 + 1);
@@ -13,5 +13,7 @@ int random(int start, int end) {
 
     return random_value;
 }
-int random(int st)
-
+int rdmvit(int start, int end) {
+    srand(time(NULL));
+    return rand() % end + start;
+}

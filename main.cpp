@@ -300,8 +300,15 @@ public:
     }
 
     void turn_left(){
-        //pression des pneux qui diminue à chaque tour
+        //Vitesse et temps
+        float distance = 595;
+        int vit=rdmvit(25, 100);
+        int temps = (int)(distance / vit);
+        time.Updatetime(temps);
+
         circuit.SetVirageG(circuit.GetVirageG()+1);
+
+        //pression des pneux qui diminue à chaque tour
         pneu_arriere_droit.Setpression(pneu_arriere_droit.Getpression()-(random(0,1))/5);
         pneu_arriere_gauche.Setpression(pneu_arriere_gauche.Getpression()-(random(0,1))/8);
         pneu_avant_droit.Setpression(pneu_avant_droit.Getpression()-(random(0,1))/5);
@@ -341,6 +348,11 @@ public:
     };
         
     void turn_right() {
+        //Vitesse et temps
+        float distance = 595;
+        int vit = rdmvit(25, 100);
+        int temps = (int)(distance / vit);
+        time.Updatetime(temps);
 
         circuit.SetVirageD(circuit.GetVirageD()+1);
         circuit.Setdistance(circuit.Getdistance()+599);
@@ -413,6 +425,8 @@ void affichage(Car car) {
     while (r != 9) {
         printf("Voiture: ");
         cout << car.Getname() << endl;
+        printf("Tour ");
+        cout << car.circuit.GetTurn() << endl;
         printf("Temps pass%c:", 130);
         cout << car.time.Gettime() << endl;
         printf("L'huile du moteur est \x85 %f%% \n", car.moteur.Gethuile());
