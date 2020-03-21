@@ -272,9 +272,9 @@ public:
     Aileron aileron;
     Turbo turbo;
     Circuit circuit;
-
-    void Setname(string a) {
-        name = a;
+    Car(string name="", int ia=0) {
+        this->name = name;
+        this->ia = ia;
     }
 
     string Getname() {
@@ -301,14 +301,14 @@ public:
 
     void turn_left(){
         //Vitesse et temps
-        float distance = 595;
-        int vit=rdmvit(25, 100);
-        int temps = (int)(distance / vit);
-        time.Updatetime(temps);
+        //float distance = 595;
+        //int vit = rdmvit(25, 100);
+        //int temps = (int)(distance / vit);
+        time.Updatetime((int)(595 / rdmvit(25, 100)));
 
-        circuit.SetVirageG(circuit.GetVirageG()+1);
 
         //pression des pneux qui diminue à chaque tour
+        circuit.SetVirageG(circuit.GetVirageG()+1);
         pneu_arriere_droit.Setpression(pneu_arriere_droit.Getpression()-(random(0,1))/5);
         pneu_arriere_gauche.Setpression(pneu_arriere_gauche.Getpression()-(random(0,1))/8);
         pneu_avant_droit.Setpression(pneu_avant_droit.Getpression()-(random(0,1))/5);
@@ -348,11 +348,11 @@ public:
     };
         
     void turn_right() {
-        //Vitesse et temps
-        float distance = 595;
-        int vit = rdmvit(25, 100);
-        int temps = (int)(distance / vit);
-        time.Updatetime(temps);
+        //float distance = 599;
+        //int vit = rdmvit(25, 100);
+        //int temps = (int)(distance / vit);
+        time.Updatetime((int)(599/rdmvit(25,100)));
+
 
         circuit.SetVirageD(circuit.GetVirageD()+1);
         circuit.Setdistance(circuit.Getdistance()+599);
@@ -392,29 +392,151 @@ public:
         turbo.Setusure(turbo.Getusure()+(random(0,1)/4));
 
     }
+
+    void choice_ia() {
+        if(pneu_arriere_droit.Getpression() < (ia * 10) || pneu_arriere_droit.Getusure() > (90-(ia*10)) || pneu_arriere_gauche.Getpression() < (ia * 10) || pneu_arriere_gauche.Getusure() > (90 - (ia * 10)) || pneu_avant_droit.Getpression() < (ia * 10) || pneu_avant_droit.Getusure() > (90 - (ia * 10)) || pneu_avant_gauche.Getpression() < (ia * 10) || pneu_avant_gauche.Getusure() > (90 - (ia * 10))) {
+            Change_pneu();
+            time.Updatetime(pneu_arriere_droit.Gettime());
+        }
+        if (moteur.Gettemperature() > (900 - (ia * 10))) {
+            moteur.Settemperature(moteur.Gettemperature() - 10);
+            time.Updatetime(moteur.Gettime());
+        }
+        if (moteur.Gethuile() < (ia * 5)) {
+            moteur.Refill();
+            time.Updatetime(moteur.Gettime());
+        }
+        if (reservoir.Getessence() < (ia * 5)) {
+            reservoir.Refill();
+            time.Updatetime(reservoir.Gettime());
+        }
+        if (boitedevitesse.Getusure() > (90 -(ia * 10))) {
+        }
+        if (batterie.Getcharge() < (ia * 10)) {
+            batterie.Change();
+            time.Updatetime(batterie.Gettime());
+        }
+        if (suspension.Getusure() > (90 - (ia * 10))) {
+            suspension.Change();
+            time.Updatetime(suspension.Gettime());
+        }/*
+        case 5:car.turbo.Change();
+            car.time.Updatetime(car.turbo.Gettime());
+            break;
+        case 6:car.aileron.Change();
+            car.time.Updatetime(car.aileron.Gettime());
+            break;
+        */
+    }
+
+
+    void loose (){
+        if(pneu_arriere_droit.Getpression()<10){
+           pneu_arriere_droit.Setusure(pneu_arriere_droit.Getusure()+40);
+           cout<<"Un de vos pneus est pratiquement dégonflé, c'est insoutenable !"<<endl;
+           if(pneu_arriere_droit.Getpression()<1){
+               destroyed =true;
+           }
+        }
+        if(pneu_arriere_gauche.Getpression()<10){
+           pneu_arriere_gauche.Setusure(pneu_arriere_gauche.Getusure()+40); 
+           cout<<"Un de vos pneus est pratiquement dégonflé, c'est insoutenable !"<<endl;
+           if(pneu_arriere_gauche.Getpression()<1){
+               destroyed =true;
+           }
+        }
+        if(pneu_avant_droit.Getpression()<10){
+           pneu_avant_droit.Setusure(pneu_avant_droit.Getusure()+40);
+           cout<<"Un de vos pneus est pratiquement dégonflé, c'est insoutenable !"<<endl;
+           if(pneu_avant_droit.Getpression()<1){
+               destroyed =true;
+           }
+        }
+        if(pneu_avant_gauche.Getpression()<10){
+           pneu_avant_gauche.Setusure(pneu_avant_gauche.Getusure()+40);
+           cout<<"Un de vos pneus est pratiquement dégonflé, c'est insoutenable !"<<endl;
+           if(pneu_avant_gauche.Getpression()<1){
+               destroyed =true;
+           }
+        }
+        if(pneu_arriere_droit.Getusure()>98){
+            cout<<"Votre pneu arriere droit vient d'éclater, vous pensez a vos proches une derniere fois."<<endl;
+            destroyed=  true;
+        }
+        if(pneu_arriere_gauche.Getusure()>98){
+           cout<<"Votre pneu arriere  gauche vient d'éclater, vous pensez a vos proches une derniere fois."<<endl;
+            destroyed=  true;
+        }
+        if(pneu_avant_droit.Getusure()>98){
+           cout<<"Votre pneu avant droit vient d'éclater, heuresement vous avez fait votre testament !"<<endl;
+            destroyed=  true;
+        }
+        if(pneu_avant_gauche.Getusure()>98){
+           cout<<"Votre pneu avant gauche vient d'éclater, heuresement vous avez fait votre testament !"<<endl;
+            destroyed=  true;
+        }
+        if(moteur.Gettemperature()>900){
+            cout<<"Une fumée vous gêne, on dirait bien que votre moteur à laché !"<<endl;
+            destroyed =true;
+        }
+        if(moteur.Gethuile()<5){
+            cout<<"Vous ralentissez soudainement, on dirait bien que la course est fini pou vous !"<<endl;
+            destroyed =true;
+        }
+        if(reservoir.Getessence()<1){
+            cout<<"Votre véhicule va de moins en moins vite, vous n'échaperrez pas au fameux coup de la panne !"<<endl;
+        }
+        if (boitedevitesse.Getusure()>80){
+            cout<<"La 5ème ne passe plus, les autres vous double."<<endl;
+            destroyed=true;
+        }
+        if(batterie.Getcharge()<10){
+            cout<<"La batterie est à plat !"<<endl;
+            destroyed =true;
+        }
+        if(suspension.Getusure()>80){
+            cout<<"Vos suspensions sont endommagées"<<endl;
+            destroyed =true;
+        }
+        //si l'aileron casse c'est pas grave, idem pour turbo
+    }
+
+
+
     void course(){
+            loose();
             circuit.Setdistance(0);
             circuit.SetVirageG(0);
             circuit.SetVirageD(0);
+            if (destroyed==true && ia==0){
+                cout<<"Game over !"<<endl;
+            }
+            else {
+                while(circuit.Getdistance() != circuit.Getsize()){
 
-            while(circuit.Getdistance() != circuit.Getsize()){
+                    while(circuit.GetVirageG()<5){
 
-                while(circuit.GetVirageG()<5){
+                        turn_left();
+                    }
 
-                    turn_left();
-                }
+                    while(circuit.GetVirageD()<4){
 
-                while(circuit.GetVirageD()<4){
-
-                    turn_right();
-                }
+                        turn_right();
+                    }
         
-            circuit.SetTurn(circuit.GetTurn()+1);
+                circuit.SetTurn(circuit.GetTurn()+1);
         
                 
+                }
             }
+            
+        
+            
     }
+
+    
     private:
+        int ia = 0;
         string name = "Vroum Vroum";
         bool comme_neuve = false;
         bool destroyed =false;
